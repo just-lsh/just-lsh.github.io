@@ -1,0 +1,57 @@
+---
+import ThemeToggle from "../components/ThemeToggle.astro";
+import { site } from "../data/site";
+import "../styles/global.css";
+
+interface Props {
+  title: string;
+  description: string;
+}
+
+const { title, description } = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const home = `${import.meta.env.BASE_URL.replace(/\/$/, "")}/`;
+const favicon = `${home}favicon.svg`;
+// Keep the early theme bootstrap inline: no bundle and no flash of the wrong theme.
+const themeScript = `(()=>{let D=document,r=D.documentElement;try{let t=localStorage.theme;if(/^(light|dark)$/.test(t))r.dataset.theme=t}catch{}let d=()=>r.dataset.theme||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light'),u=()=>{let b=D.querySelector('[data-theme-toggle]'),t=d();b.hidden=false;b.textContent='['+t+']';b.ariaPressed=t==='dark';b.ariaLabel='Use '+(t==='dark'?'light':'dark')};D.addEventListener('click',e=>{if(e.target.closest('[data-theme-toggle]')){let t=d()==='dark'?'light':'dark';r.dataset.theme=t;try{localStorage.theme=t}catch{}u()}});D.addEventListener('DOMContentLoaded',u)})();`;
+const scriptBytes = new TextEncoder().encode(themeScript).length;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" type="image/svg+xml" href={favicon} />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" content="#f5f3ec" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0e100f" media="(prefers-color-scheme: dark)" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:type" content="website" />
+    <script is:inline set:html={themeScript} />
+  </head>
+  <body class="min-h-screen bg-bg font-mono text-sm leading-[1.65] text-fg min-[521px]:text-[16px]">
+    <a href="#main" class="sr-only focus-visible:not-sr-only focus-visible:absolute focus-visible:left-4 focus-visible:top-4 focus-visible:z-10 focus-visible:bg-bg focus-visible:p-2">Skip to content</a>
+    <div class="mx-auto flex min-h-screen max-w-[72ch] flex-col px-4 py-4 min-[521px]:px-7 min-[521px]:pt-5 min-[521px]:pb-6">
+      <header class="mb-7 flex items-center justify-between gap-3 border-b border-dashed border-line pb-3">
+        <a class="text-accent" href={home}>{site.name.toLowerCase()}<span class="text-dim">@</span>{site.handle}<span class="text-dim">:~$</span></a>
+        <nav aria-label="Main navigation" class="flex items-center gap-3.5">
+          {["about", "projects", "contact"].map((section) => (
+            <a class="hidden text-dim before:opacity-50 before:content-['./'] hover:text-fg focus-visible:text-fg min-[640px]:inline" href={`${home}#${section}`}>{section}</a>
+          ))}
+          <ThemeToggle />
+        </nav>
+      </header>
+      <main id="main" tabindex="-1" class="flex-1"><slot /></main>
+      <footer class="flex flex-wrap justify-between gap-x-4 gap-y-1 border-t border-dashed border-line pt-3 text-xs text-dim">
+        <span>© {new Date().getFullYear()} {site.name.toLowerCase()}</span>
+        <span>{scriptBytes} bytes js · built with astro</span>
+      </footer>
+    </div>
+  </body>
+</html>
