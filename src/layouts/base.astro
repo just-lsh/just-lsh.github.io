@@ -42,8 +42,8 @@ const scriptBytes = new TextEncoder().encode(themeScript).length;
     <div class="mx-auto flex min-h-screen max-w-[72ch] flex-col px-4 py-4 min-[521px]:px-7 min-[521px]:pt-5 min-[521px]:pb-6">
       <header class="mb-7 flex items-center justify-between gap-3 border-b border-dashed border-line pb-3">
         <a class="text-keyword" href={home}>{site.name.toLowerCase()}<span class="text-comment">@</span>{site.handle}<span class="text-comment">:~$</span></a>
-        <nav aria-label="Main navigation" class="flex items-center gap-3.5">
-          {["about", "projects", "contact"].map((section) => (
+        <nav aria-label="Main navigation" class="flex items-center gap-2 min-[768px]:gap-3.5">
+          {["about", "work", "projects", "contact"].map((section) => (
             <a class="hidden text-comment before:text-comment before:opacity-50 before:content-['./'] hover:text-fg focus-visible:text-fg min-[640px]:inline" href={`${home}#${section}`}>{section}</a>
           ))}
           <ThemeToggle />

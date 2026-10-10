@@ -1,7 +1,10 @@
 import tailwindcss from "@tailwindcss/vite";
 import { defineConfig, fontProviders } from "astro/config";
+import icon from "astro-icon";
 
 export default defineConfig({
+  // New icons must be added to this allow-list.
+  integrations: [icon({ include: { mdi: ["briefcase", "source-repository", "react"] } })],
   site: "https://just-lsh.github.io",
   server: { allowedHosts: [".ts.net"] },
   fonts: [

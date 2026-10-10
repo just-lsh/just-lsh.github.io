@@ -1,0 +1,166 @@
+---
+import { Icon } from "astro-icon/components";
+import type { IconName } from "../data/site";
+
+export interface Row {
+  icon: IconName;
+  date?: string;
+  meta?: string;
+  name: string;
+  href?: string;
+  detail?: string;
+  description: string;
+}
+
+interface Props {
+  caption: string;
+  rows: Row[];
+}
+
+const { caption, rows } = Astro.props;
+---
+
+<table class="listing mt-1.5 w-full border-collapse text-left">
+  <caption class="sr-only">{caption}</caption>
+  <thead class="sr-only">
+    <tr><th scope="col">Icon</th><th scope="col">Date</th><th scope="col">Duration</th><th scope="col">Name</th><th scope="col">Detail</th></tr>
+  </thead>
+  {rows.map(({ icon, date, meta, name, href, detail, description }) => (
+    <tbody class="entry hover:bg-sel focus-within:bg-sel">
+      <tr class="entry-heading">
+        <td class="icon-cell text-function"><Icon name={icon} aria-hidden="true" width="1em" height="1em" class="listing-icon" /></td>
+        <td class:list={["date-cell text-number", { "missing-date": !date }]}>
+          {date ? date.split("→").map((part, index) => <>{index > 0 && <span class="text-comment"> → </span>}{part.trim()}</>) : <span class="text-comment">—</span>}
+          {meta && <span class="mobile-meta text-comment">{meta}</span>}
+        </td>
+        <td class="meta-cell text-comment">{meta}</td>
+        <td class="name-cell text-function">
+          {href ? <a href={href} rel="noopener">{name}</a> : name}
+          {detail && <span class="mobile-detail text-string">{detail}</span>}
+        </td>
+        <td class="detail-cell text-string">{detail}</td>
+      </tr>
+      <tr class="entry-description">
+        <td aria-hidden="true"></td>
+        <td colspan="4" class="description-cell text-fg">{description}</td>
+      </tr>
+    </tbody>
+  ))}
+</table>
+
+<style>
+  .listing {
+    /* Keep the five nonwrapping columns within the narrow desktop breakpoint. */
+    font-size: 0.875rem;
+  }
+
+  .entry-heading td {
+    padding-block: 3px;
+    vertical-align: middle;
+    white-space: nowrap;
+  }
+
+  .icon-cell,
+  .date-cell,
+  .meta-cell,
+  .name-cell {
+    box-sizing: content-box;
+    width: 1%;
+    padding-right: 2ch;
+  }
+
+  .date-cell {
+    min-width: 17ch;
+  }
+
+  .meta-cell {
+    min-width: 6ch;
+  }
+
+  .detail-cell {
+    width: auto;
+  }
+
+  .listing-icon {
+    display: block;
+    width: 1em;
+    height: 1em;
+  }
+
+  .description-cell {
+    padding-bottom: 0.6em;
+    overflow-wrap: break-word;
+  }
+
+  .entry:last-child .description-cell {
+    padding-bottom: 3px;
+  }
+
+  .mobile-meta,
+  .mobile-detail {
+    display: none;
+  }
+
+  @media (min-width: 640px) {
+    .listing {
+      font-size: inherit;
+    }
+  }
+
+  @media (max-width: 520px) {
+    .listing,
+    .entry {
+      display: block;
+      font-size: inherit;
+    }
+
+    .entry-heading,
+    .entry-description {
+      display: grid;
+      grid-template-columns: 1em minmax(0, 1fr);
+      column-gap: 1ch;
+    }
+
+    .entry-heading td {
+      width: auto;
+      min-width: 0;
+      padding-right: 0;
+    }
+
+    .icon-cell {
+      grid-column: 1;
+      grid-row: 1;
+      align-self: center;
+    }
+
+    .entry-heading .name-cell {
+      grid-column: 2;
+      grid-row: 1;
+      align-self: center;
+      white-space: normal;
+    }
+
+    .date-cell {
+      grid-column: 2;
+      grid-row: 2;
+    }
+
+    .meta-cell,
+    .detail-cell,
+    .missing-date {
+      display: none;
+    }
+
+    .mobile-meta,
+    .mobile-detail {
+      display: inline;
+      margin-left: 1ch;
+      white-space: nowrap;
+    }
+
+    .description-cell {
+      grid-column: 2;
+      min-width: 0;
+    }
+  }
+</style>
