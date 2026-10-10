@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
   <title>Len</title>
-  <rect width="32" height="32" rx="4" fill="#171717" />
-  <path d="M10 8h4v12h8v4H10z" fill="#fff" />
+  <rect width="32" height="32" rx="4" fill="oklch(19.1% 0 0)" />
+  <path d="m8 10 6 6-6 6m9 0h7" fill="none" stroke="oklch(81.1% 0.079 191.6)" stroke-width="2" />
 </svg>

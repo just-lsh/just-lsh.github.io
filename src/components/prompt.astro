@@ -7,6 +7,6 @@ interface Props {
 const { command, id, as: Tag = "h2" } = Astro.props;
 ---
 
-<Tag id={id} class="m-0 text-[length:inherit] font-normal text-dim">
-  <span class="text-accent">~</span> $ <span class="text-fg">{command}</span><slot />
+<Tag id={id} class="m-0 text-[length:inherit] font-normal text-comment">
+  <span class="text-keyword">~</span> $ <span class="text-fg">{command}</span><slot />
 </Tag>

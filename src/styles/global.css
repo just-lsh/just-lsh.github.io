@@ -1,15 +1,18 @@
 @import "tailwindcss";
 
 @theme inline {
-  --color-bg: light-dark(#f5f3ec, #0e100f);
-  --color-fg: light-dark(#232520, #d6d8cf);
-  --color-dim: light-dark(#666a60, #858b80);
-  --color-line: light-dark(#d6d3c7, #2c312b);
-  --color-accent: light-dark(#2b7135, #8fd694);
-  --color-accent-2: light-dark(#885b0c, #e5c07b);
-  --color-sel: light-dark(#e6eadb, #1b241c);
-  --font-mono:
-    ui-monospace, "SF Mono", "JetBrains Mono", "Cascadia Code", Menlo, Consolas, monospace;
+  --color-bg: light-dark(oklch(98.9% 0 0), oklch(19.1% 0 0));
+  --color-fg: light-dark(oklch(20% 0.012 285), oklch(91.9% 0 0));
+  --color-line: light-dark(oklch(92% 0.003 285), oklch(26.9% 0 0));
+  --color-sel: light-dark(oklch(96% 0.003 285), oklch(23.9% 0 0));
+  --color-keyword: light-dark(oklch(54.5% 0.079 191.6), oklch(81.1% 0.079 191.6));
+  --color-string: light-dark(oklch(57.1% 0.132 329.9), oklch(76.9% 0.132 329.9));
+  --color-number: light-dark(oklch(55.7% 0.086 80.2), oklch(84.9% 0.086 80.2));
+  --color-function: light-dark(oklch(56.1% 0.097 58.1), oklch(80.5% 0.097 58.1));
+  --color-link: light-dark(oklch(55.3% 0.059 248.7), oklch(69.7% 0.059 248.7));
+  --color-comment: light-dark(oklch(55.3% 0 0), oklch(63.3% 0 0));
+  --color-cursor: light-dark(oklch(20% 0.012 285), oklch(91.9% 0 0));
+  --font-mono: var(--font-geist-mono);
 }
 
 :root {
@@ -31,7 +34,7 @@
   }
 
   :focus-visible {
-    outline: 2px solid var(--color-accent);
+    outline: 2px solid var(--color-link);
     outline-offset: 4px;
   }
 
@@ -50,5 +53,17 @@
   animation: blink 1.1s steps(1) infinite;
   @media (prefers-reduced-motion: reduce) {
     animation: none;
+  }
+}
+
+@utility syntax-link {
+  color: var(--color-link);
+  text-decoration: underline;
+  text-decoration-color: color-mix(in oklch, var(--color-link) 40%, transparent);
+  text-underline-offset: 3px;
+
+  &:hover,
+  &:focus-visible {
+    text-decoration-color: var(--color-link);
   }
 }

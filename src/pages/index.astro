@@ -10,7 +10,7 @@ const paragraphs = Array.isArray(site.bio) ? site.bio : [site.bio];
   <section aria-labelledby="name" class="mb-7">
     <div aria-hidden="true"><Prompt as="p" command="whoami" /></div>
     <h1 id="name" class="mt-1.5 mb-0.5 text-[28px] leading-[1.2] font-semibold tracking-[-0.5px]">{site.name}</h1>
-    <p class="text-accent-2">{site.role}</p>
+    <p class="text-string">{site.role}</p>
   </section>
   <section id="about" aria-labelledby="about-prompt" class="mb-7">
     <Prompt id="about-prompt" command="cat about.txt" />
@@ -24,8 +24,8 @@ const paragraphs = Array.isArray(site.bio) ? site.bio : [site.bio];
       <tbody class="block min-[521px]:table-row-group">
         {site.projects.map((project) => (
           <tr class="mb-2 block last:mb-0 hover:bg-sel focus-within:bg-sel min-[521px]:mb-0 min-[521px]:table-row">
-            <td class="hidden py-[3px] pr-3.5 align-top whitespace-nowrap text-dim min-[521px]:table-cell">{project.date ?? "—"}</td>
-            <td class="block py-[3px] align-top min-[521px]:table-cell min-[521px]:pr-3.5 min-[521px]:whitespace-nowrap"><a class="text-accent" href={project.url} rel="noopener">{project.name}</a></td>
+            <td class="hidden py-[3px] pr-3.5 align-top whitespace-nowrap text-number min-[521px]:table-cell">{project.date ?? "—"}</td>
+            <td class="block py-[3px] align-top min-[521px]:table-cell min-[521px]:pr-3.5 min-[521px]:whitespace-nowrap"><a class="text-function" href={project.url} rel="noopener">{project.name}</a></td>
             <td class="block pb-[3px] pl-3.5 align-top min-[521px]:table-cell min-[521px]:py-[3px] min-[521px]:pl-0 [overflow-wrap:anywhere]">{project.description}</td>
           </tr>
         ))}
@@ -36,11 +36,11 @@ const paragraphs = Array.isArray(site.bio) ? site.bio : [site.bio];
     <Prompt id="contact-prompt" command="cat contact" />
     <dl class="mt-1.5">
       {site.links.map((link) => (
-        <div class="flex gap-0"><dt class="w-[9ch] shrink-0 whitespace-nowrap text-dim">{link.label}</dt><dd class="min-w-0"><a class="text-accent" href={link.href} rel="me noopener">{link.text.split(/(?<=[@./])/u).map((part, index) => <>{index > 0 && <wbr />}{part}</>)}</a></dd></div>
+        <div class="flex gap-0"><dt class="w-[9ch] shrink-0 whitespace-nowrap text-comment">{link.label}</dt><dd class="min-w-0"><a class="syntax-link" href={link.href} rel="me noopener">{link.text.split(/(?<=[@./])/u).map((part, index) => <>{index > 0 && <wbr />}{part}</>)}</a></dd></div>
       ))}
     </dl>
   </section>
   <div aria-hidden="true" class="mb-7">
-    <Prompt as="p"><span class="cursor-blink inline-block h-[1.1em] w-[0.6em] align-[-2px] bg-accent"></span></Prompt>
+    <Prompt as="p"><span class="cursor-blink inline-block h-[1.1em] w-[0.6em] align-[-2px] bg-cursor"></span></Prompt>
   </div>
 </Base>

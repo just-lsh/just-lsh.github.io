@@ -1,4 +1,5 @@
 ---
+import { Font } from "astro:assets";
 import ThemeToggle from "../components/theme-toggle.astro";
 import { site } from "../data/site";
 import "../styles/global.css";
@@ -22,13 +23,14 @@ const scriptBytes = new TextEncoder().encode(themeScript).length;
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <Font cssVariable="--font-geist-mono" preload={[{ weight: 400 }]} />
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
     <link rel="icon" type="image/svg+xml" href={favicon} />
     <meta name="color-scheme" content="light dark" />
-    <meta name="theme-color" content="#f5f3ec" media="(prefers-color-scheme: light)" />
-    <meta name="theme-color" content="#0e100f" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="oklch(98.9% 0 0)" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="oklch(19.1% 0 0)" media="(prefers-color-scheme: dark)" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
@@ -39,16 +41,16 @@ const scriptBytes = new TextEncoder().encode(themeScript).length;
     <a href="#main" class="sr-only focus-visible:not-sr-only focus-visible:absolute focus-visible:left-4 focus-visible:top-4 focus-visible:z-10 focus-visible:bg-bg focus-visible:p-2">Skip to content</a>
     <div class="mx-auto flex min-h-screen max-w-[72ch] flex-col px-4 py-4 min-[521px]:px-7 min-[521px]:pt-5 min-[521px]:pb-6">
       <header class="mb-7 flex items-center justify-between gap-3 border-b border-dashed border-line pb-3">
-        <a class="text-accent" href={home}>{site.name.toLowerCase()}<span class="text-dim">@</span>{site.handle}<span class="text-dim">:~$</span></a>
+        <a class="text-keyword" href={home}>{site.name.toLowerCase()}<span class="text-comment">@</span>{site.handle}<span class="text-comment">:~$</span></a>
         <nav aria-label="Main navigation" class="flex items-center gap-3.5">
           {["about", "projects", "contact"].map((section) => (
-            <a class="hidden text-dim before:opacity-50 before:content-['./'] hover:text-fg focus-visible:text-fg min-[640px]:inline" href={`${home}#${section}`}>{section}</a>
+            <a class="hidden text-comment before:text-comment before:opacity-50 before:content-['./'] hover:text-fg focus-visible:text-fg min-[640px]:inline" href={`${home}#${section}`}>{section}</a>
           ))}
           <ThemeToggle />
         </nav>
       </header>
       <main id="main" tabindex="-1" class="flex-1"><slot /></main>
-      <footer class="flex flex-wrap justify-between gap-x-4 gap-y-1 border-t border-dashed border-line pt-3 text-xs text-dim">
+      <footer class="flex flex-wrap justify-between gap-x-4 gap-y-1 border-t border-dashed border-line pt-3 text-xs text-comment">
         <span>© {new Date().getFullYear()} {site.name.toLowerCase()}</span>
         <span>{scriptBytes} bytes js · built with astro</span>
       </footer>
